@@ -7,10 +7,6 @@ pipeline {
         COMPOSE_HTTP_TIMEOUT = '300'
     }
 
-    environment {
-        IMAGE = "azuredevopsfree/jenkins-cicd-demo"
-    }
-
     stages {
 
         stage('Checkout') {
