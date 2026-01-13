@@ -33,6 +33,14 @@ pipeline {
             }
         }
 
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
         stage('Trivy Scan') {
             steps {
                 bat '''
@@ -67,6 +75,15 @@ pipeline {
                 bat '''
                 docker rm -f demo 2>nul
                 docker run -d -p 8000:5000 --name demo %IMAGE%:latest
+                '''
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat '''
+                kubectl apply -f k8s/deployment.yaml
+                kubectl apply -f k8s/service.yaml
                 '''
             }
         }
