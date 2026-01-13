@@ -23,7 +23,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                     bat '''
-                    C:\\Tools\\sonar scanner\\sonar-scanner-8.0.1.6346-windows-x64\\bin\\sonar-scanner.bat^
+                    "C:\\tools\\sonar-scanner\\bin\\sonar-scanner.bat"^
                     -Dsonar.projectKey=jenkins-demo ^
                     -Dsonar.sources=. ^
                     -Dsonar.host.url=http://localhost:9000 ^
