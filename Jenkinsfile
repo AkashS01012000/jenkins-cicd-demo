@@ -3,6 +3,12 @@ pipeline {
 
     environment {
         IMAGE = "azuredevopsfree/jenkins-cicd-demo"
+        DOCKER_CLIENT_TIMEOUT = '300'
+        COMPOSE_HTTP_TIMEOUT = '300'
+    }
+
+    environment {
+        IMAGE = "azuredevopsfree/jenkins-cicd-demo"
     }
 
     stages {
@@ -24,15 +30,14 @@ pipeline {
                 withSonarQubeEnv('sonarqube') {
                     withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
                         bat '''
-                        "C:\\Tools\\sonar scanner\\sonar-scanner-8.0.1.6346-windows-x64\\bin\\sonar-scanner.bat"^
+                        "C:\\Tools\\sonar scanner\\sonar-scanner-8.0.1.6346-windows-x64\\bin\\sonar-scanner.bat" ^
                         -Dsonar.projectKey=jenkins-demo ^
                         -Dsonar.sources=. ^
                         -Dsonar.host.url=http://localhost:9000 ^
                         -Dsonar.login=%SONAR_TOKEN%
                         '''
-                    }    
+                    }
                 }
-
             }
         }
 
